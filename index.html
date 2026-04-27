@@ -90,7 +90,6 @@
                     <p class="intro-text" style="text-align:center;font-size:12px;color:#5a6070;margin-bottom:14px;">Completá el formulario y recibí una <strong>evaluación gratuita</strong> sin compromiso.</p>
                     <form id="formularioEvaluacion">
 
-                        <!-- 1. Datos personales -->
                         <div class="row-3">
                             <div class="form-group"><label>Nombre Completo <span class="required">*</span></label><input type="text" id="nombreClienteEval" placeholder="Nombre" required></div>
                             <div class="form-group"><label>CI N.° <span class="required">*</span></label><input type="text" id="ciClienteEval" placeholder="1.234.567" required></div>
@@ -101,7 +100,6 @@
                             <div class="form-group"><label>Ciudad <span class="required">*</span></label><input type="text" id="ciudadClienteEval" placeholder="Asunción, CDE..." required></div>
                         </div>
 
-                        <!-- 2. Monto, Ingreso e Informconf -->
                         <div class="row-2">
                             <div class="form-group"><label>Monto Solicitado (Gs) <span class="required">*</span></label><input type="text" id="monto" placeholder="1.000.000" required></div>
                             <div class="form-group"><label>Ingreso Mensual (Gs) <span class="required">*</span></label><input type="text" id="ingreso" placeholder="2.500.000" required></div>
@@ -118,7 +116,6 @@
                             </select>
                         </div>
 
-                        <!-- 3. Perfil Laboral -->
                         <div class="form-group">
                             <label>Perfil Laboral <span class="required">*</span></label>
                             <select id="perfil" required onchange="actualizarSecciones()">
@@ -134,28 +131,24 @@
                             </select>
                         </div>
 
-                        <!-- 4. Checklist unificado (antigüedad + documentos) -->
                         <div class="checklist-container" id="checklistContainer" style="display:none;">
                             <div class="checklist-title">Requisitos del perfil - Marcá lo que TENÉS:</div>
                             <div id="checklistItems"></div>
                             <div class="doc-reminder">📄 <strong>Importante:</strong> Para proceder a su solicitud debe enviar los documentos y comprobantes por WhatsApp. Ante cualquier duda, escríbame.</div>
                         </div>
 
-                        <!-- 5. Ubicación -->
                         <div class="ubicacion-container" id="ubicacionContainer" style="display:none;">
-                            <div class="ubicacion-title">📍 Enviar ubicación por WhatsApp (pegá el enlace de Google Maps)</div>
+                            <div class="ubicacion-title">📍 Describí tu dirección y además enviá tu ubicación por WhatsApp</div>
                             <div id="ubicacionFields"></div>
+                            <div class="doc-reminder" style="margin-top:8px;">⚠️ Además de escribir tu dirección, enviá tu ubicación por WhatsApp para que podamos ubicarte más rápido.</div>
                         </div>
 
-                        <!-- 6. Referencias (campos separados) -->
                         <div class="form-group"><label>Referencia 1 (Familiar - mismo apellido) <span class="required">*</span></label><input type="text" id="ref1" placeholder="Nombre, Apellido y Celular" required></div>
                         <div class="form-group"><label>Referencia 2 (Personal) <span class="required">*</span></label><input type="text" id="ref2" placeholder="Nombre, Apellido y Celular" required></div>
                         <div class="form-group"><label>Referencia 3 (Personal) <span class="required">*</span></label><input type="text" id="ref3" placeholder="Nombre, Apellido y Celular" required></div>
 
-                        <!-- 7. Observaciones -->
                         <div class="form-group"><label>Observaciones <span class="required">*</span></label><textarea id="observaciones" placeholder="Si te falta algo o querés aclarar algún detalle..." required></textarea></div>
 
-                        <!-- 8. Botón -->
                         <button type="submit" class="btn btn-primary">ENVIAR SOLICITUD POR WHATSAPP</button>
                     </form>
                 </div>
@@ -175,46 +168,14 @@
         const NUMERO_WHATSAPP = "595971992363";
 
         const PERFILES = {
-            formal_ips: {
-                antiguedad: '6 meses de aportes IPS',
-                requisitos: ["Antigüedad: 6 meses de aportes IPS", "Liquidación de salario"],
-                ubicaciones: ["Ubicación del domicilio"]
-            },
-            informal: {
-                antiguedad: '6 meses como mínimo',
-                requisitos: ["Antigüedad: 6 meses como mínimo", "Certificado de trabajo o RUC laboral"],
-                ubicaciones: ["Ubicación del domicilio particular", "Ubicación del domicilio laboral"]
-            },
-            publico_permanente: {
-                antiguedad: '1 mes (permanente)',
-                requisitos: ["Antigüedad: 1 mes (permanente)"],
-                ubicaciones: ["Ubicación del domicilio"]
-            },
-            publico_contratado: {
-                antiguedad: '15 meses (contratado)',
-                requisitos: ["Antigüedad: 15 meses (contratado)"],
-                ubicaciones: ["Ubicación del domicilio"]
-            },
-            asalariado_iva: {
-                antiguedad: '6 meses con IVAs',
-                requisitos: ["Antigüedad: 6 meses con IVAs", "6 últimos IVAs", "6 facturas emitidas a la empresa"],
-                ubicaciones: ["Ubicación del domicilio"]
-            },
-            prof_independiente: {
-                antiguedad: '12 meses con RUC y Registro o título universitario',
-                requisitos: ["Antigüedad: 12 meses con RUC y Registro o título universitario", "6 últimos IVAs", "Título o Registro profesional", "Facturas (últimos 6 meses)"],
-                ubicaciones: ["Ubicación del domicilio"]
-            },
-            micro_comerciante: {
-                antiguedad: '18 meses (con RUC/Patente) o 24 meses (sin)',
-                requisitos: ["Antigüedad: 18 meses (con RUC/Patente) o 24 meses (sin)", "6 últimos IVAs", "Patente (si tiene)", "Fotos del negocio", "Fotos de mercaderías"],
-                ubicaciones: ["Ubicación GPS del local"]
-            },
-            rentista: {
-                antiguedad: 'No especificada',
-                requisitos: ["Contrato privado de alquiler", "Foto de cédula del inquilino", "Fotos del inquilinato", "Factura de servicio público a nombre del rentista"],
-                ubicaciones: ["Ubicación GPS del inquilinato"]
-            }
+            formal_ips: { antiguedad: '6 meses de aportes IPS', requisitos: ["Antigüedad: 6 meses de aportes IPS", "Liquidación de salario"], ubicaciones: ["Dirección particular (calle, número, barrio, referencia)"] },
+            informal: { antiguedad: '6 meses como mínimo', requisitos: ["Antigüedad: 6 meses como mínimo", "Certificado de trabajo o RUC laboral"], ubicaciones: ["Dirección particular (calle, número, barrio, referencia)", "Dirección laboral (calle, número, barrio, referencia)"] },
+            publico_permanente: { antiguedad: '1 mes (permanente)', requisitos: ["Antigüedad: 1 mes (permanente)"], ubicaciones: ["Dirección particular (calle, número, barrio, referencia)"] },
+            publico_contratado: { antiguedad: '15 meses (contratado)', requisitos: ["Antigüedad: 15 meses (contratado)"], ubicaciones: ["Dirección particular (calle, número, barrio, referencia)"] },
+            asalariado_iva: { antiguedad: '6 meses con IVAs', requisitos: ["Antigüedad: 6 meses con IVAs", "6 últimos IVAs", "6 facturas emitidas a la empresa"], ubicaciones: ["Dirección particular (calle, número, barrio, referencia)"] },
+            prof_independiente: { antiguedad: '12 meses con RUC y Registro o título universitario', requisitos: ["Antigüedad: 12 meses con RUC y Registro o título universitario", "6 últimos IVAs", "Título o Registro profesional", "Facturas (últimos 6 meses)"], ubicaciones: ["Dirección particular (calle, número, barrio, referencia)"] },
+            micro_comerciante: { antiguedad: '18 meses (con RUC/Patente) o 24 meses (sin)', requisitos: ["Antigüedad: 18 meses (con RUC/Patente) o 24 meses (sin)", "6 últimos IVAs", "Patente (si tiene)", "Fotos del negocio", "Fotos de mercaderías"], ubicaciones: ["Dirección del local (calle, número, barrio, referencia)"] },
+            rentista: { antiguedad: 'No especificada', requisitos: ["Contrato privado de alquiler", "Foto de cédula del inquilino", "Fotos del inquilinato", "Factura de servicio público a nombre del rentista"], ubicaciones: ["Dirección del inquilinato (calle, número, barrio, referencia)"] }
         };
 
         const CUOTERO = {
@@ -244,7 +205,6 @@
 
             const datos = PERFILES[perfil];
 
-            // Checklist unificado (antigüedad + documentos, sin referencias)
             if (datos.requisitos.length > 0) {
                 let html = '';
                 datos.requisitos.forEach((req, i) => {
@@ -256,11 +216,10 @@
                 checklistContainer.style.display = 'none';
             }
 
-            // Ubicaciones
             if (datos.ubicaciones.length > 0) {
                 let html = '';
                 datos.ubicaciones.forEach((ubi, i) => {
-                    html += `<div class="form-group" style="margin-bottom:8px;"><label>${ubi} <span class="required">*</span></label><input type="text" id="ubicacion_${i}" class="ubicacion-input" placeholder="Pegá el enlace de Google Maps o enviá por WhatsApp" required></div>`;
+                    html += `<div class="form-group" style="margin-bottom:8px;"><label>${ubi} <span class="required">*</span></label><textarea id="ubicacion_${i}" class="ubicacion-input" placeholder="Escribí tu dirección completa: calle, número, barrio, referencia..." required style="min-height:60px;"></textarea></div>`;
                 });
                 ubicacionFields.innerHTML = html;
                 ubicacionContainer.style.display = 'block';
@@ -341,7 +300,7 @@
 
             let ubicacionesMsg = '';
             if (ubicaciones.length > 0) {
-                ubicacionesMsg += 'UBICACIONES:\n';
+                ubicacionesMsg += 'DIRECCIONES:\n';
                 ubicaciones.forEach((u, i) => { ubicacionesMsg += '  * ' + nombresUbicaciones[i] + ': ' + u + '\n'; });
             }
 
